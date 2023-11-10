@@ -13,17 +13,18 @@ public class DoublyLinkedListCustom implements MyListInterface {
      * @param item Das hinzuzufügende Element.
      */
     @Override
-    public void addFirst(int item) {
-        Node newNode = new Node(item);
-        if (head == null) {
-            head = tail = newNode;
-        } else {
-            newNode.setNext(head);
-            head.setPrevious(newNode);
-            head = newNode;
+    public void addFirst(int item) {   // Methode zum Hinzufügen eines Elements am Anfang der Liste
+        Node newNode = new Node(item); // Erstellt einen neuen Knoten mit dem gegebenen Wert
+        if (head == null) {            // Überprüft, ob die Liste leer ist
+            head = tail = newNode;     // Setzt den neuen Knoten als Kopf und Schwanz der Liste, wenn leer
+        } else {                       // Falls die Liste nicht leer ist
+            newNode.setNext(head);     // Setzt den next-Zeiger des neuen Knotens auf den aktuellen Kopf
+            head.setPrevious(newNode); // Setzt den prev-Zeiger des aktuellen Kopfes auf den neuen Knoten
+            head = newNode;            // Aktualisiert den Kopf der Liste auf den neuen Knoten
         }
-        size++;
+        size++;                        // Erhöht die Größe der Liste um eins
     }
+
 
 
     /**
@@ -323,28 +324,30 @@ public class DoublyLinkedListCustom implements MyListInterface {
      * Falls der Knoten mit dem Schlüsselwert der tail ist, wird der neue Knoten der neue tail.
      */
     @Override
-    public boolean insertAfter(int key, int data) {
-        Node current = head;
-        while (current != null && current.getValue() != key) {
-            current = current.getNext();
+    public boolean insertAfter(int key, int data) {     // Methode um ein Element nach einem gegebenen Schlüssel einzufügen
+        Node current = head;                            // Startet mit dem Kopf der Liste
+        while (current != null && current.getValue() != key) { // Durchläuft die Liste, um den Schlüssel zu finden
+            current = current.getNext();                // Geht zum nächsten Knoten
         }
 
-        if (current == null) {
-            return false; // Schlüssel wurde nicht gefunden
+        if (current == null) {                          // Überprüft, ob das Ende der Liste erreicht wurde, ohne den Schlüssel zu finden
+            return false;                               // Schlüssel wurde nicht gefunden
         }
 
-        Node newNode = new Node(data);
-        newNode.setNext(current.getNext());
-        newNode.setPrevious(current);
-        if (current.getNext() != null) {
-            current.getNext().setPrevious(newNode);
+        Node newNode = new Node(data);                  // Erstellt einen neuen Knoten mit dem gegebenen Datenwert
+        newNode.setNext(current.getNext());             // Der next-Zeiger des neuen Knotens zeigt auf den Nachfolger des aktuellen Knotens
+        newNode.setPrevious(current);                   // Der vorherige Zeiger des neuen Knotens zeigt auf den aktuellen Knoten
+
+        if (current.getNext() != null) {                // Überprüft, ob der aktuelle Knoten nicht der letzte in der Liste ist
+            current.getNext().setPrevious(newNode);     // Setzt den vorherigen Zeiger des Nachfolgers des aktuellen Knotens auf den neuen Knoten
         } else {
-            tail = newNode; // wenn das aktuelle Element der tail war
+            tail = newNode;                             // wenn das aktuelle Element der tail war
         }
-        current.setNext(newNode);
-        size++;
-        return true;
+        current.setNext(newNode);                       // Setzt den nächsten Zeiger des aktuellen Knotens auf den neuen Knoten
+        size++;                                         // Erhöht die Größe der Liste
+        return true;                                    // Gibt true zurück, um den Erfolg der Operation anzuzeigen
     }
+
 
     /**
      * Löscht den ersten Knoten, der den angegebenen Schlüsselwert enthält, aus der Liste.
